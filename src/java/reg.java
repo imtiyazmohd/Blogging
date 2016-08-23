@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -33,10 +35,39 @@ public class reg extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
          String username=request.getParameter("username");
          String email=request.getParameter("email");
-         String pass=request.getParameter("password");
+         String pass=request.getParameter("pass");
          String add=request.getParameter("address");
+         String cpass=request.getParameter("cpass");
+         //out.println(pass + cpass);
+         if(username.equals("")||email.equals("")||pass.equals("")||add.equals(""))
+         {
+             
+             response.setContentType("text/html;charset=UTF-8");
+        
+  
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+        RequestDispatcher dist;
+                        dist = request.getRequestDispatcher("index.html");
+                       out.println("<h3>------------------------Null value not allowed please enter all detail------------------------- <h3>");
+           dist.include(request, response);
+         }
+         else if(!pass.equals(cpass))
+         {
+              response.setContentType("text/html;charset=UTF-8");
+        
+  
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+        RequestDispatcher dist;
+                        dist = request.getRequestDispatcher("index.html");
+                       out.println("<h3>-------------- Password should be same------------- <h3>");
+           dist.include(request, response);
+             
+         }
          
-         out.println(username + email + pass+add);
+         else{
+         //out.println(username + email + pass+add);
          try{
              Class.forName("com.mysql.jdbc.Driver");
        con=   DriverManager.getConnection("jdbc:mysql://localhost:3306/blog","root","root");
@@ -54,17 +85,20 @@ public class reg extends HttpServlet {
            ptmt.setString(4,add);
          
             int i=ptmt.executeUpdate();  
-             
-out.println(i+" records inserted");  
+             if(i>=0){
+  HttpSession session=request.getSession();  
+        session.setAttribute("email",email);  
+        session.setAttribute("pass", pass);  
 //out.println(i+" records inserted"); 
 response.sendRedirect("blogmain.html");
+             }
             } catch (SQLException ex) {
                 Logger.getLogger(reg.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
 
-    
+    }
    
 
 }

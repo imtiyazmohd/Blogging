@@ -13,9 +13,11 @@ import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import sun.rmi.server.Dispatcher;
 
 /**
@@ -34,6 +36,21 @@ public class login extends HttpServlet {
         String email=request.getParameter("email");
        // email="vishwanand505@gmail.com";
         //pass="123456";
+        
+        if(pass.equals("") || email.equals(""))
+        {
+        response.setContentType("text/html;charset=UTF-8");
+        
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+        RequestDispatcher dist;
+                        dist = request.getRequestDispatcher("index.html");
+                       out.println("<h3>Fill the Field marked with *<h3>");
+           dist.include(request, response);
+        
+        }
+        else{
         
           try{
              Class.forName("com.mysql.jdbc.Driver");
@@ -54,7 +71,17 @@ public class login extends HttpServlet {
                 
                     if(rs.getString(1).equals(pass))
             {
-                response.sendRedirect("blogmain.html");
+                 response.setContentType("text/html;charset=UTF-8");
+                 HttpSession session=request.getSession();  
+        session.setAttribute("email",email);  
+        session.setAttribute("pass", pass);
+                 
+                
+                  out.println("<!DOCTYPE html>");
+               RequestDispatcher dist;
+                        dist = request.getRequestDispatcher("blogmain.html");
+                     
+           dist.include(request, response);
             }
             else{
                            response.setContentType("text/html;charset=UTF-8");
@@ -68,11 +95,13 @@ public class login extends HttpServlet {
            dist.include(request, response);
         
                     
-                    };  
+                    }  
                           }  
+        
            
         } catch (SQLException ex) {
             Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+        }
         }
           
     }

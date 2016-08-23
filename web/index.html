@@ -24,10 +24,18 @@ body {
 {
     var1= document.getElementById("pass").value;
     var2=document.getElementById("cpass").value;
-    
-    if(var1!=var2)
+    var3=document.getElementById("email").value;
+    var k;
+      if(var1===""||var2==="" || var3===""){
+       k= alert("null  value not allowed");
+       
+   }
+    else if(var1!==var2)
         alert("missmatch password");
+         
+           document.load(index.html);
         
+  
 }
     </script>
   </head>
@@ -36,9 +44,9 @@ body {
 
       <div style="margin-left: 100px;margin-top: 150px; position: absolute;width: 222px;height: 200px;background-color: #ECF0F1">
               <form method="post" action="login"><br>
-                  <label  for="email" style="margin-left: 80px;">Email</label><br>
+                  <label  for="email" style="margin-left: 80px;">Email*</label><br>
                   <input type="text" placeholder="Email" name="email"  style="margin-left: 20px;"/><br>
-             <label for="password" style="margin-left: 80px;">Password</label><br>
+             <label for="password" style="margin-left: 80px;">Password*</label><br>
              <input type="password"  name="password" placeholder="password"  style="margin-left: 20px;"/><br>
              <input type="submit" value="Login" style="margin-left: 80px;" />
               </form>
@@ -48,22 +56,24 @@ body {
       <h1>Register Here!</h1>
       <form method="post" action="reg">
           <div class="reg_section personal_info">
-      <h3>Your Personal Information</h3>
-      <input type="text" name="username" value="" placeholder="Your Desired Username">
-      <input type="email" name="email" value="" placeholder="Your E-mail Address" style="width:294px;height: 37px;margin-left: 7px;  ">
+      <h3>Your Personal Information *</h3>
+      <input type="text" name="username" id="username" value="" placeholder="Your Desired Username" id="uname"/>
+      <input type="email" name="email" value="" placeholder="Your E-mail Address" style="width:294px;height: 37px;margin-left: 7px;" id="email"/>
       </div>
       <div class="reg_section password">
-      <h3>Your Password</h3>
-      <input type="password" name="password" value="" placeholder="Your Password " id="pass"/>
-      <input type="password" name="confirm" value="" placeholder="Confirm Password" id="cpass"/>
+      <h3>Your Password*</h3>
+      <input type="password" name="pass"  placeholder="Your Password " id="pass"/>
+      <input type="password" name="cpass"  placeholder="Confirm Password" id="cpass"/>
       </div>
       <div class="reg_section password">
-      <h3>Your Address</h3>
+      <h3>Your Address*</h3>
       
-      <textarea  name="address" placeholder="Your Full Address" id="tx" onclick="validate()"></textarea>
+      <textarea id="address" name="address" placeholder="Your Full Address" id="tx" onclick="validate()"></textarea>
       </div>
       
-      <p class="submit"><input type="submit" name="commit" value="Sign Up"></p>
+          <p class="submit"><input type="submit" name="commit" value="Sign Up" ></p>
+      
+      
       </form>
     </section>
   </div>
